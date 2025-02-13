@@ -11,10 +11,10 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 # Load trained Keras model using load_model (for .h5 or SavedModel format)
-loaded_model = load_model("C:/Users/subik/Downloads/sentiment_model.h5")
+loaded_model = load_model("sentiment_model.h5")
 
 # Load tokenizer using pickle
-with open("C:/Users/subik/Downloads/tokenizer.pkl", "rb") as handle:
+with open("tokenizer.pkl", "rb") as handle:
     tokenizer = pickle.load(handle)
 
 # Function for sentiment prediction
