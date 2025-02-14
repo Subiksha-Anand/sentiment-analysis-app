@@ -14,7 +14,7 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 loaded_model = load_model("sentiment_model (1).h5")
 
 # Load tokenizer using pickle
-with open("tokenizer.pkl", "rb") as handle:
+with open("tokenizer (1).pkl", "rb") as handle:
     tokenizer = pickle.load(handle)
 
 # Function for sentiment prediction
