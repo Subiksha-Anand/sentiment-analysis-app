@@ -20,6 +20,10 @@ with open("tokenizer.pkl", "rb") as handle:
 # Function for sentiment prediction
 def sentiment_prediction(input_review):
     sequence = tokenizer.texts_to_sequences([input_review])
+
+    if not sequence or not sequence[0]:  # Handle empty sequences
+        return "⚠️ The input text does not contain recognizable words!"
+        
     padded_sequence = pad_sequences(sequence, maxlen=200)
     prediction = loaded_model.predict(padded_sequence)
     if prediction[0][0] > 0.5:
