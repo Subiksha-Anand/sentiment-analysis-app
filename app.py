@@ -10,10 +10,11 @@ import pickle
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
-# Load trained Keras model using load_model (for .h5 or SavedModel format)
-loaded_model = load_model("sentiment_model.h5")
+# Load trained model (Ensure files are in the same directory)
+loaded_model = load_model("sentiment_model.h5", compile=False)
+loaded_model.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"])
 
-# Load tokenizer using pickle
+# Load tokenizer
 with open("tokenizer.pkl", "rb") as handle:
     tokenizer = pickle.load(handle)
 
@@ -23,32 +24,25 @@ def sentiment_prediction(input_review):
 
     if not sequence or not sequence[0]:  # Handle empty sequences
         return "⚠️ The input text does not contain recognizable words!"
-        
+
     padded_sequence = pad_sequences(sequence, maxlen=200)
     prediction = loaded_model.predict(padded_sequence)
-    if prediction[0][0] > 0.5:
-        return "Positive"
-    else:
-        return "☹️ Negative"
+
+    return "😊 Positive" if prediction[0][0] > 0.5 else "☹️ Negative"
 
 # Streamlit UI
 def main():
-    # Giving a title
     st.title('IMDB Sentiment Analysis')
-    
-    # Getting user input
+
     review = st.text_area("Enter a movie review:")
-    
-    # Predicting sentiment when button is clicked
-    diagnosis = ''
+
     if st.button('Predict Sentiment'):
         if review.strip():
-            diagnosis = sentiment_prediction(review)
+            result = sentiment_prediction(review)
+            st.success(f"Sentiment: {result}")
         else:
             st.warning("Please enter a review!")
-    
-    # Display result
-    st.success(f"Sentiment: {diagnosis}")
 
 if __name__ == '__main__':
     main()
+
