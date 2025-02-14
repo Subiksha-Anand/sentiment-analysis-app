@@ -11,35 +11,22 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 # Load trained Keras model using load_model (for .h5 or SavedModel format)
-loaded_model = load_model("sentiment_model.h5")
-try:
-  
-    loaded_model.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"])
-    print(" Model successfully loaded!")
-except Exception as e:
-    print(f" Error loading model: {e}")
-
+loaded_model = load_model("C:/Users/subik/Downloads/sentiment_model.h5")
 
 # Load tokenizer using pickle
-with open("tokenizer.pkl", "rb") as handle:
+with open("C:/Users/subik/Downloads/tokenizer.pkl", "rb") as handle:
     tokenizer = pickle.load(handle)
-import os
-
-print("Model exists:", os.path.exists("sentiment_model.h5"))
-print("Tokenizer exists:", os.path.exists("tokenizer.pkl"))
-
 
 # Function for sentiment prediction
 def sentiment_prediction(input_review):
     sequence = tokenizer.texts_to_sequences([input_review])
-    if not sequence or not sequence[0]:  # Ensuring sequence is not empty
-      st.error(" The input text does not contain recognizable words!")
+    padded_sequence = pad_sequences(sequence, maxlen=200)
+    prediction = loaded_model.predict(padded_sequence)
+    if prediction[0][0] > 0.5:
+        return "Positive"
     else:
-      padded_sequence = pad_sequences(sequence, maxlen=200)
-      prediction = loaded_model.predict(padded_sequence)
-      sentiment = "Positive " if prediction[0][0] > 0.5 else "Negative "
-      st.success(f"Sentiment: {sentiment}")
- 
+        return "☹️ Negative"
+
 # Streamlit UI
 def main():
     # Giving a title
