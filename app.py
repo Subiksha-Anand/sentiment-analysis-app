@@ -19,13 +19,31 @@ with open("tokenizer.pkl", "rb") as handle:
 
 # Function for sentiment prediction
 def sentiment_prediction(input_review):
+    # Convert review to sequence
     sequence = tokenizer.texts_to_sequences([input_review])
+
+    # Debugging: Print sequence output
+    print(f"Input Review: {input_review}")
+    print(f"Tokenized Sequence: {sequence}")
+
+    # If sequence is empty, return a warning
+    if not sequence or len(sequence[0]) == 0:
+        return "⚠️ No recognizable words found in input! Try using different words."
+
+    # Pad sequence
     padded_sequence = pad_sequences(sequence, maxlen=200)
+
+    # Debugging: Print padded sequence
+    print(f"Padded Sequence: {padded_sequence}")
+
+    # Predict sentiment
     prediction = loaded_model.predict(padded_sequence)
-    if prediction[0][0] > 0.5:
-        return "Positive"
-    else:
-        return "☹️ Negative"
+
+    # Debugging: Print prediction output
+    print(f"Model Prediction: {prediction}")
+
+    return "😊 Positive" if prediction[0][0] > 0.5 else "☹️ Negative"
+
 
 # Streamlit UI
 def main():
