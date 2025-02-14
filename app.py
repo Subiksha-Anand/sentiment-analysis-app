@@ -23,6 +23,11 @@ except Exception as e:
 # Load tokenizer using pickle
 with open("tokenizer (1).pkl", "rb") as handle:
     tokenizer = pickle.load(handle)
+import os
+
+print("Model exists:", os.path.exists("sentiment_model (1).h5"))
+print("Tokenizer exists:", os.path.exists("tokenizer (1).pkl"))
+
 
 # Function for sentiment prediction
 def sentiment_prediction(input_review):
