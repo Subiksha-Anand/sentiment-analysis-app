@@ -49,7 +49,32 @@ except Exception as e:
 
 # Function for sentiment prediction
 def sentiment_prediction(input_review):
+    try:
+        loaded_model = load_model("sentiment_model.h5")
+    
+        if loaded_model is None:
+            raise ValueError("Model is None. It may be corrupted.")
+    
+            print("✅ Model loaded successfully!")
+     except Exception as e:
+        print(f"❌ Error loading model: {e}")
+
+
+# Load tokenizer using pickle
+# Try loading the tokenizer with error handling
+     try:
+        with open("tokenizer.pkl", "rb") as handle:
+            tokenizer = pickle.load(handle)
+    
+         if tokenizer is None:
+                raise ValueError("Tokenizer is None. The file may be corrupted.")
+    
+        print("✅ Tokenizer loaded successfully!")
+        print(f"Tokenizer vocabulary size: {len(tokenizer.word_index)}")
+      except Exception as e:
+        print(f"❌ Error loading tokenizer: {e}")
     # Convert review to sequence
+    
     sequence = tokenizer.texts_to_sequences([input_review])
 
     # Debugging: Print sequence output
