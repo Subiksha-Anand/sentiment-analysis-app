@@ -21,6 +21,7 @@ with open("tokenizer.pkl", "rb") as handle:
 # Function for sentiment prediction
 def sentiment_prediction(input_review):
     sequence = tokenizer.texts_to_sequences([input_review])
+    input_review = input_review.lower()  # Convert to lowercase
 
     if not sequence or not sequence[0]:  # Handle empty sequences
         return "⚠️ The input text does not contain recognizable words!"
