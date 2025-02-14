@@ -32,13 +32,14 @@ print("Tokenizer exists:", os.path.exists("tokenizer (1).pkl"))
 # Function for sentiment prediction
 def sentiment_prediction(input_review):
     sequence = tokenizer.texts_to_sequences([input_review])
-    padded_sequence = pad_sequences(sequence, maxlen=200)
-    prediction = loaded_model.predict(padded_sequence)
-    if prediction[0][0] > 0.5:
-        return "Positive"
+    if not sequence or not sequence[0]:  # Ensuring sequence is not empty
+      st.error(" The input text does not contain recognizable words!")
     else:
-        return "☹️ Negative"
-
+      padded_sequence = pad_sequences(sequence, maxlen=200)
+      prediction = loaded_model.predict(padded_sequence)
+      sentiment = "Positive " if prediction[0][0] > 0.5 else "Negative "
+      st.success(f"Sentiment: {sentiment}")
+ 
 # Streamlit UI
 def main():
     # Giving a title
