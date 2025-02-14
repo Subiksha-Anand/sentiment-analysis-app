@@ -11,7 +11,7 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 # Load trained Keras model using load_model (for .h5 or SavedModel format)
-loaded_model = load_model("sentiment_model (1).h5")
+loaded_model = load_model("sentiment_model.h5")
 try:
   
     loaded_model.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"])
@@ -21,12 +21,12 @@ except Exception as e:
 
 
 # Load tokenizer using pickle
-with open("tokenizer (1).pkl", "rb") as handle:
+with open("tokenizer.pkl", "rb") as handle:
     tokenizer = pickle.load(handle)
 import os
 
-print("Model exists:", os.path.exists("sentiment_model (1).h5"))
-print("Tokenizer exists:", os.path.exists("tokenizer (1).pkl"))
+print("Model exists:", os.path.exists("sentiment_model.h5"))
+print("Tokenizer exists:", os.path.exists("tokenizer.pkl"))
 
 
 # Function for sentiment prediction
