@@ -12,6 +12,13 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 # Load trained Keras model using load_model (for .h5 or SavedModel format)
 from tensorflow.keras.models import load_model
+import os
+
+model_path = "sentiment_model.h5"
+if os.path.exists(model_path):
+    print("✅ Model file found!")
+else:
+    print("❌ Model file NOT found! Check the file path.")
 
 # Try loading the model with error handling
 try:
