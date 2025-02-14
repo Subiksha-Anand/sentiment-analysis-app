@@ -23,7 +23,6 @@ else:
 # Try loading the model with error handling
 
 
-
 # Function for sentiment prediction
 def sentiment_prediction(input_review):
     try:
@@ -33,9 +32,9 @@ def sentiment_prediction(input_review):
             raise ValueError("Model is None. It may be corrupted.")
     
             print("✅ Model loaded successfully!")
-     except Exception as e:
+    except Exception as e:
             print(f"❌ Error loading model: {e}")
-     try:
+    try:
         with open("tokenizer.pkl", "rb") as handle:
             tokenizer = pickle.load(handle)
     
@@ -44,7 +43,7 @@ def sentiment_prediction(input_review):
     
           print("✅ Tokenizer loaded successfully!")
           print(f"Tokenizer vocabulary size: {len(tokenizer.word_index)}")
-      except Exception as e:
+    except Exception as e:
         print(f"❌ Error loading tokenizer: {e}")
     # Convert review to sequence
     
