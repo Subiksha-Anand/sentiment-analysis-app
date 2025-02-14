@@ -11,7 +11,14 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 # Load trained Keras model using load_model (for .h5 or SavedModel format)
-loaded_model = load_model("sentiment_model (1).h5")
+
+try:
+    loaded_model = load_model("sentiment_model (1).h5")
+    loaded_model.compile(optimizer="adam", loss="binary_crossentropy", metrics=["accuracy"])
+    print(" Model successfully loaded!")
+except Exception as e:
+    print(f" Error loading model: {e}")
+
 
 # Load tokenizer using pickle
 with open("tokenizer (1).pkl", "rb") as handle:
