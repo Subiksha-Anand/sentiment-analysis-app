@@ -34,7 +34,7 @@ def sentiment_prediction(input_review):
     
             print("✅ Model loaded successfully!")
      except Exception as e:
-        print(f"❌ Error loading model: {e}")
+            print(f"❌ Error loading model: {e}")
      try:
         with open("tokenizer.pkl", "rb") as handle:
             tokenizer = pickle.load(handle)
@@ -42,35 +42,35 @@ def sentiment_prediction(input_review):
          if tokenizer is None:
                 raise ValueError("Tokenizer is None. The file may be corrupted.")
     
-        print("✅ Tokenizer loaded successfully!")
-        print(f"Tokenizer vocabulary size: {len(tokenizer.word_index)}")
+          print("✅ Tokenizer loaded successfully!")
+          print(f"Tokenizer vocabulary size: {len(tokenizer.word_index)}")
       except Exception as e:
         print(f"❌ Error loading tokenizer: {e}")
     # Convert review to sequence
     
-    sequence = tokenizer.texts_to_sequences([input_review])
+      sequence = tokenizer.texts_to_sequences([input_review])
 
     # Debugging: Print sequence output
-    print(f"Input Review: {input_review}")
-    print(f"Tokenized Sequence: {sequence}")
+      print(f"Input Review: {input_review}")
+      print(f"Tokenized Sequence: {sequence}")
 
     # If sequence is empty, return a warning
-    if not sequence or len(sequence[0]) == 0:
+      if not sequence or len(sequence[0]) == 0:
         return "⚠️ No recognizable words found in input! Try using different words."
 
     # Pad sequence
-    padded_sequence = pad_sequences(sequence, maxlen=200)
+      padded_sequence = pad_sequences(sequence, maxlen=200)
 
     # Debugging: Print padded sequence
-    print(f"Padded Sequence: {padded_sequence}")
+      print(f"Padded Sequence: {padded_sequence}")
 
     # Predict sentiment
-    prediction = loaded_model.predict(padded_sequence)
+      prediction = loaded_model.predict(padded_sequence)
 
     # Debugging: Print prediction output
-    print(f"Model Prediction: {prediction}")
+      print(f"Model Prediction: {prediction}")
 
-    return "😊 Positive" if prediction[0][0] > 0.5 else "☹️ Negative"
+      return "😊 Positive" if prediction[0][0] > 0.5 else "☹️ Negative"
 
 
 # Streamlit UI
